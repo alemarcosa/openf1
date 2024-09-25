@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div>
+    <h3> Piloti F1 </h3>
+    <img style="height: 50px; width: 70px;" src="../../assets/icon/favicon.png" alt="">
+  </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if(isLoading){
+  <ion-item>
+    <ion-label id="label">Loading...</ion-label>
+    <ion-spinner name="circular"></ion-spinner>
+  </ion-item>
+  }
+  @else if (isLoading) {
+    @for (driver of drivers; track $index) {
+      <ion-item>
+        <ion-label>
+          <p>
+            <ion-skeleton-text
+            [animated]="true"
+            style="width: 80%;"
+            ></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    }
+  }
+  @else{
+  <ion-list>
+    <app-list [driversInput]="drivers" (eventoVersoPadre)="clickFiglio($event)"></app-list>
+  </ion-list>
+  }
+  @if (isError) {
+    <ion-label>
+      <h3>Errore!</h3>
+      <ion-button (click)="OnRefreshPage()">
+        Clicca qui per riaggiornare
+      </ion-button>
+    </ion-label>
+  }
+</ion-content>

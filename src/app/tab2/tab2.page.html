@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div>
+      <ion-item>
+        <ion-select aria-label="Years" placeholder="Seleziona anno" (ionChange)="onClick($event)">
+          @for (year of years; track $index) {
+          <ion-select-option [value]="year">{{year}}</ion-select-option>
+        }
+        </ion-select>
+      </ion-item>
+    <img style="height: 50px; width: 70px;" src="../../assets/icon/favicon.png" alt="">
+  </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if(isLoading){
+    <ion-item>
+      <ion-label id="label">Loading...</ion-label>
+      <ion-spinner name="circular"></ion-spinner>
+    </ion-item>
+    }
+    @else if (isLoading) {
+      @for (grandPrize of grandPrize; track $index) {
+        <ion-item>
+          <ion-label>
+            <p>
+              <ion-skeleton-text
+              [animated]="true"
+              style="width: 80%;"
+              ></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      }
+    }
+    @else{
+      <ion-list>
+        @for(item of grandPrize; track $index){
+            <ion-item [button]="true" [routerLink]="[item.meeting_key]">
+              <ion-icon name="location-outline"></ion-icon>
+              <ion-label>{{item.country_name}}</ion-label>
+              <ion-label>{{item.meeting_official_name}}</ion-label>
+              <ion-icon name="chevron-forward-outline"></ion-icon>            
+            </ion-item>
+         }
+        </ion-list>
+    }
+    @if (isError) {
+      <ion-label>
+        <h3>Errore!</h3>
+        <ion-button (click)="OnRefreshPage()">
+          Clicca qui per riaggiornare
+        </ion-button>
+      </ion-label>
+    }
+</ion-content>

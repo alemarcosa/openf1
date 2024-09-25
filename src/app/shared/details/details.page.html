@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div>
+      <ion-buttons>
+        <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Dettagli Gran Premio</ion-title>
+      <img style="height: 50px; width: 70px;" src="../../assets/icon/favicon.png" alt="">
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [value]="segmentValue" (ionChange)="onSegmentChange($event)">
+    <ion-segment-button value="sessions">
+      <ion-label>Sessioni</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="drivers">
+      <ion-label>Piloti</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  @if(segmentValue === 'sessions'){
+  @for(session of sessions; track $index){
+  <ion-card [button]="true" [routerLink]="['sessions',session.session_key]">
+    <ion-card-header>
+      <ion-card-title>{{session.session_type}}</ion-card-title>
+      <ion-card-subtitle>Data partenza: {{session.date_start}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content style="color: rgb(255, 0, 0)">
+      Clicca per visualizzare la classifica di questa sessione.
+    </ion-card-content>
+  </ion-card>
+  }
+  }@else if (segmentValue === 'drivers'){
+  @for(driver of drivers; track $index){
+  <ion-item>
+    <ion-avatar slot="start">
+      <ion-img [src]="driver.headshot_url"></ion-img>
+    </ion-avatar>
+    <ion-label>
+      <h2>{{ driver.full_name }}</h2>
+      <p>{{driver.team_name}}</p>
+    </ion-label>
+  </ion-item>
+  }
+  }
+
+</ion-content>
